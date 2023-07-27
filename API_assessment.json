@@ -1,0 +1,428 @@
+{
+	"info": {
+		"_postman_id": "b1f5cc0c-f92d-4bff-a3e7-997120137757",
+		"name": "API assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19325478"
+	},
+	"item": [
+		{
+			"name": "Post request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"var username = \"anothername\";\r",
+							"pm.test(\"Username exists in response body\", function() {\r",
+							"    pm.expect(responseBody.first_name).to.eql(username);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\" : \"sampletest2599061@user.com\",\r\n\"password\" : \"test6677\",\r\n\"first_name\" : \"anothername\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-dot-zensense108.appspot.com/api/v1/setup/",
+					"protocol": "https",
+					"host": [
+						"staging-dot-zensense108",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(0);\r",
+							"});\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Success should be equal to True\", function() {\r",
+							"    pm.expect(responseBody.success).to.be.true;\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBsZXRlc3RAdXNlci5jb20iLCJleHAiOjE3MTg2MTExMDJ9.NsfeKFrUMxbBnxHp9fTyuscGOx5azyNQQ5V_PcXlrYM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sampletest@user.com\",\r\n    \"password\": \"test12344\",\r\n    \"first_name\": \"anothername\",\r\n    \"activity_level\": \"Low\",\r\n    \"age\": 44,\r\n    \"app_version\": 6.1,\r\n    \"gender\": \"Male\",\r\n    \"height_ft\": 5,\r\n    \"height_inches\": 60,\r\n    \"isRegisteredUser\": \"YES\",\r\n    \"Platform\": \"Android\",\r\n    \"weight_lbs\": 70\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-dot-zensense108.appspot.com/api/v1/setup/",
+					"protocol": "https",
+					"host": [
+						"staging-dot-zensense108",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Token is present in the response body\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the token is present\r",
+							"    var token = responseBody.token;\r",
+							"    pm.expect(token).to.exist; // Assert that the token exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User ID is present in the response body\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the user ID is present\r",
+							"    var userId = responseBody.userId;\r",
+							"    pm.expect(userId).to.exist; // Assert that the user ID exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is equal to 'Login Successfully'\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the message is equal to 'Login Successfully'\r",
+							"    var message = responseBody.message;\r",
+							"    pm.expect(message).to.equal(\"Login Successfully\"); // Assert that the message is equal to 'Login Successfully'\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Define the number of iterations\r",
+							"const numIterations = 3;\r",
+							"\r",
+							"// Variable to store the sum of response times\r",
+							"let totalResponseTime = 0;\r",
+							"\r",
+							"// Function to calculate the average response time\r",
+							"function calculateAverageResponseTime() {\r",
+							"  return totalResponseTime / numIterations;\r",
+							"}\r",
+							"\r",
+							"// Postman test script\r",
+							"pm.test(\"Calculate average response time\", function () {\r",
+							"  // Extract the response time from the response object\r",
+							"  const responseTime = pm.response.responseTime;\r",
+							"\r",
+							"  // Add the response time to the total\r",
+							"  totalResponseTime += responseTime;\r",
+							"\r",
+							"  // Check if all iterations have completed\r",
+							"  if (pm.info.iteration === numIterations) {\r",
+							"    // Calculate the average response time\r",
+							"    const averageResponseTime = calculateAverageResponseTime();\r",
+							"\r",
+							"    // Log the average response time\r",
+							"    console.log(\"Average Response Time:\", averageResponseTime, \"ms\");\r",
+							"  }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userEmail\": \"pm.mechlintech@gmail.com\",\r\n    \"userPassword\": \"Mechlin_123$$$\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/auth/login",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"product id is present in the response body\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    var product_id = responseBody.productId;\r",
+							"    pm.expect(product_id).to.exist; \r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is equal to 'Product Added Successfully'\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    var message = responseBody.message;\r",
+							"    pm.expect(message).to.equal(\"Product Added Successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "productName",
+							"value": "qwerty",
+							"type": "text"
+						},
+						{
+							"key": "productAddedBy",
+							"value": "{{userId}}",
+							"type": "text"
+						},
+						{
+							"key": "productSubCategory",
+							"value": "shirts",
+							"type": "text"
+						},
+						{
+							"key": "productPrice",
+							"value": "11500",
+							"type": "text"
+						},
+						{
+							"key": "productDescription",
+							"value": "AdidasOriginals",
+							"type": "text"
+						},
+						{
+							"key": "productFor",
+							"value": "women",
+							"type": "text"
+						},
+						{
+							"key": "productImage",
+							"type": "file",
+							"src": "/C:/Users/HP/Downloads/5289073_7112.jpg"
+						},
+						{
+							"key": "productCategory",
+							"value": "fashion",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/product/add-product",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"product",
+						"add-product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/product/delete-product/{{productId}}",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"product",
+						"delete-product",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

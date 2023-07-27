@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "b1f5cc0c-f92d-4bff-a3e7-997120137757",
+		"name": "API assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19325478"
+	},
+	"item": [
+		{
+			"name": "Post request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(0);\r",
+							"});\r",
+							"\r",
+							"// Parse the response body as JSON\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"// Retrieve the username from the request body\r",
+							"var requestBody = pm.request.body;\r",
+							"var first_name = requestBody.first_name;\r",
+							"\r",
+							"// Verify if the same username is displayed in the response\r",
+							"pm.test(\"Username should match in the response\", function() {\r",
+							"    pm.expect(responseBody.first_name).to.eql(first_name);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\" : \"sampletest44898@user.com\",\r\n\"password\" : \"test12344447997\",\r\n\"first_name\" : \"anothernamett\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-dot-zensense108.appspot.com/api/v1/setup/",
+					"protocol": "https",
+					"host": [
+						"staging-dot-zensense108",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.greaterThan(0);\r",
+							"});\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Success should be equal to True\", function() {\r",
+							"    pm.expect(responseBody.success).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbXBsZXRlc3RAdXNlci5jb20iLCJleHAiOjE3MTg2MTExMDJ9.NsfeKFrUMxbBnxHp9fTyuscGOx5azyNQQ5V_PcXlrYM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"sampletest@user.com\",\r\n    \"password\": \"test12344\",\r\n    \"first_name\": \"anothername\",\r\n    \"activity_level\": \"Low\",\r\n    \"age\": 44,\r\n    \"app_version\": 6.1,\r\n    \"gender\": \"Male\",\r\n    \"height_ft\": 5,\r\n    \"height_inches\": 60,\r\n    \"isRegisteredUser\": \"YES\",\r\n    \"Platform\": \"Android\",\r\n    \"weight_lbs\": 70\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://staging-dot-zensense108.appspot.com/api/v1/setup/",
+					"protocol": "https",
+					"host": [
+						"staging-dot-zensense108",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"setup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Token is present in the response body\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the token is present\r",
+							"    var token = responseBody.token;\r",
+							"    pm.expect(token).to.exist; // Assert that the token exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User ID is present in the response body\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the user ID is present\r",
+							"    var userId = responseBody.userId;\r",
+							"    pm.expect(userId).to.exist; // Assert that the user ID exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Message is equal to 'Login Successfully'\", function () {\r",
+							"    // Get the response body\r",
+							"    var responseBody = pm.response.json();\r",
+							"\r",
+							"    // Check if the message is equal to 'Login Successfully'\r",
+							"    var message = responseBody.message;\r",
+							"    pm.expect(message).to.equal(\"Login Successfully\"); // Assert that the message is equal to 'Login Successfully'\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userEmail\": \"pm.mechlintech@gmail.com\",\r\n    \"userPassword\": \"Mechlin_123$$$\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/auth/login",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/product/delete-product/{{productId}}",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"product",
+						"delete-product",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"productName\":\"qwerty\",\r\n\"productAddedBy\":{{userId}},\r\n\"productCategory\":\"fashion\",\r\n\"productSubCategory\":\"shirts\",\r\n\"productPrice\":\"11500\",\r\n\"productDescription\":\"AdidasOriginals\",\r\n\"productFor\":\"women\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rahulshettyacademy.com/api/ecom/product/add-product",
+					"protocol": "https",
+					"host": [
+						"rahulshettyacademy",
+						"com"
+					],
+					"path": [
+						"api",
+						"ecom",
+						"product",
+						"add-product"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

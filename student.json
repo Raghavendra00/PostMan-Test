@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "a39222d4-590d-407b-973f-ef0fa80ea44e",
+		"name": "Api automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19325478"
+	},
+	"item": [
+		{
+			"name": "Get Request Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function (){",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});",
+							"",
+							"pm.test(\"Response body is not empty\", function () {",
+							"    pm.expect(pm.response.text()).not.to.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type header is application/json\", () => {",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');",
+							"});",
+							"",
+							"pm.test(\"Cookie JSESSIONID is present\", () => {",
+							"  pm.expect(pm.cookies.has('JSESSIONID')).to.be.false;",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Test data type of the response\", () => {",
+							"  pm.expect(jsonData).to.be.an(\"object\");",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"michael.lawson@reqres.in\");",
+							"});",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202,200]);",
+							"});",
+							"var schema = {",
+							"    \"items\": {",
+							"        \"type\": \"boolean\"",
+							"    }",
+							"};",
+							"",
+							"var data1 = [true, false];",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(data1, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Body is correct\", function () {",
+							"    pm.response.to.have.body(Object);",
+							"});",
+							"",
+							"pm.test(\"value of per_page field is 6\",function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.per_page).to.eql(6);",
+							"});",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(data.email).to.eql(\"michael.lawson@reqres.in\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\",\r\n    \"id\": \"317\",\r\n    \"createdAt\": \"2023-06-11T07:11:18.771Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Request User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsondata= pm.response.json();\r",
+							"pm.globals.set(\"id1\",jsondata.data[0].id);\r",
+							"\r",
+							"var jsondata= pm.response.json();\r",
+							"pm.globals.set(\"id2\",jsondata.data[3].id)\r",
+							"console.log(\"This is my first console log\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const UserID = Math.floor((Math.random() * 10 + 1));\r",
+							"pm.environment.set(\"UserID2\",UserID );\r",
+							"pm.globals.set(\"UserTD\", UserID) ;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/{{UserTD}}",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{UserTD}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://reqres.in",
+			"type": "string"
+		}
+	]
+}

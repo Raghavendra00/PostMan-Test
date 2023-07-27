@@ -1,0 +1,17 @@
+
+var randomName = generateRandomString(8);
+var randomPassword = generateRandomString(10);
+
+
+pm.variables.set("name", randomName);
+pm.variables.set("password", randomPassword);
+
+function generateRandomString(length) {
+    var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var randomString = "";
+    for (var i = 0; i < length; i++) {
+        var randomIndex = Math.floor(Math.random() * charset.length);
+        randomString += charset.charAt(randomIndex);
+    }
+    return randomString;
+}
